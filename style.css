@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.welcome-screen {
+  text-align: center;
+  padding: 20px;
+}
+
+.zoro-img {
+  width: 250px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px limegreen;
+}
+
+h1 {
+  font-size: 22px;
+  margin-top: 15px;
+  color: lime;
+}
+
+button {
+  margin-top: 20px;
+  background: limegreen;
+  color: black;
+  padding: 12px 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px limegreen;
+}
