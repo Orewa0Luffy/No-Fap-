@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Daily Plan - NoFap Journey</title>
-  <link rel="stylesheet" href="style.css">
   <style>
     body {
       background: #0d0d0d;
@@ -13,7 +12,7 @@
       padding: 20px;
       text-align: center;
     }
-    .timer, .goal, .tasks, .quote {
+    .timer, .goal, .tasks, .quote, .custom-task {
       margin-top: 20px;
       background: #111;
       border-radius: 12px;
@@ -36,6 +35,13 @@
       color: #ffcc00;
       font-weight: bold;
       font-size: 18px;
+    }
+    input[type="text"], input[type="time"], button {
+      margin: 8px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
     }
   </style>
 </head>
@@ -78,10 +84,21 @@
     </ul>
   </div>
 
+  <!-- Add Custom Task -->
+  <div class="custom-task">
+    <h3>Add Your Own Task</h3>
+    <input type="text" id="customTask" placeholder="Enter your task" />
+    <input type="time" id="alarmTime" />
+    <button onclick="addTask()">Add Task + Alarm</button>
+    <ul id="userTasks"></ul>
+  </div>
+
   <!-- Motivational Quote -->
   <div class="quote" id="motivationalQuote">
     💥 “Discipline is choosing between what you want now and what you want most.” 💥
   </div>
+
+  <audio id="alarmSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
 
   <script>
     // Timer logic
@@ -120,6 +137,37 @@
         }
       });
     });
+
+    // Add Custom Task
+    function addTask() {
+      const taskText = document.getElementById("customTask").value.trim();
+      const time = document.getElementById("alarmTime").value;
+      if (!taskText) {
+        alert("Please enter a task.");
+        return;
+      }
+
+      const li = document.createElement("li");
+      li.textContent = taskText + (time ? ` (Alarm at ${time})` : "");
+      document.getElementById("userTasks").appendChild(li);
+
+      if (time) {
+        const [hours, minutes] = time.split(":");
+        const now = new Date();
+        const alarmTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0);
+
+        const delay = alarmTime.getTime() - now.getTime();
+        if (delay > 0) {
+          setTimeout(() => {
+            document.getElementById("alarmSound").play();
+            alert("⏰ Time for: " + taskText);
+          }, delay);
+        }
+      }
+
+      document.getElementById("customTask").value = "";
+      document.getElementById("alarmTime").value = "";
+    }
   </script>
 
 </body>
