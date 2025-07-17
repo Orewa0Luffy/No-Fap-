@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Plan - Zoro Discipline</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="daily-screen">
+    <h1>Day <span id="dayCount">1</span></h1>
+    <p id="quote">“A man grows when he faces strong opponents.” — Zoro</p>
+
+    <button onclick="completeDay()">✅ Complete Day</button>
+    <button onclick="resetStreak()">🔁 Relapsed? Start Again</button>
+    
+    <br /><br />
+    <a href="index.html" style="color:lime;">⬅️ Back to Home</a>
+  </div>
+
+  <script>
+    const dayCount = document.getElementById("dayCount");
+    const quote = document.getElementById("quote");
+
+    const quotes = [
+      "“A man grows when he faces strong opponents.” — Zoro",
+      "“I don't care who you are. I will surpass you.” — Zoro",
+      "“Discipline is doing it even when no one’s watching.”",
+      "“Push today. Cry later.”",
+      "“Better than yesterday. That’s the goal.”",
+      "“Fall down 7 times, stand up 8.”",
+      "“Stay strong. Stay silent. Work hard.”",
+      "“Your future self is watching.”"
+    ];
+
+    // Load from localStorage
+    let currentDay = localStorage.getItem("zoroDay") || 1;
+    dayCount.textContent = currentDay;
+    quote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+    function completeDay() {
+      currentDay++;
+      localStorage.setItem("zoroDay", currentDay);
+      dayCount.textContent = currentDay;
+      quote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+    }
+
+    function resetStreak() {
+      if (confirm("Are you sure you want to reset your streak?")) {
+        currentDay = 1;
+        localStorage.setItem("zoroDay", currentDay);
+        dayCount.textContent = currentDay;
+        quote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+      }
+    }
+  </script>
+</body>
+</html>
