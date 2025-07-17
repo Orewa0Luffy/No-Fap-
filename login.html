@@ -2,66 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Login - Zoro Discipline</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - NoFap App</title>
   <style>
     body {
-      background: url('zoro.jpg') no-repeat center center/cover;
-      font-family: 'Segoe UI', sans-serif;
+      background: #0d0d0d;
       color: #00ffcc;
+      font-family: 'Arial', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
+      flex-direction: column;
     }
-    .login-box {
-      background-color: rgba(0, 0, 0, 0.85);
-      padding: 30px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 0 20px #00ffcc;
-    }
+
     input {
       padding: 12px;
-      border-radius: 8px;
       border: none;
-      margin: 10px 0;
-      width: 90%;
+      border-radius: 8px;
+      margin: 10px;
+      width: 250px;
       font-size: 16px;
+      text-align: center;
     }
+
     button {
       background-color: #00ffcc;
-      color: black;
-      font-weight: bold;
       border: none;
-      padding: 10px 20px;
+      padding: 12px 20px;
+      font-size: 16px;
+      color: #000;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 16px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
 
-<div class="login-box">
-  <h2>Enter Your Name</h2>
-  <input type="text" id="nameInput" placeholder="Your name" />
-  <br />
-  <button onclick="login()">Start Discipline</button>
-</div>
+  <h2>Enter Your Name to Start</h2>
+  <input type="text" id="nameInput" placeholder="Your Name" />
+  <button onclick="saveName()">Start Journey</button>
 
-<script>
-  function login() {
-    const name = document.getElementById("nameInput").value.trim();
-    if (name) {
-      localStorage.setItem("userName", name);
-      window.location.href = "dailyplan.html";
-    } else {
-      alert("Please enter your name.");
+  <script>
+    function saveName() {
+      const name = document.getElementById("nameInput").value.trim();
+      if (name) {
+        localStorage.setItem("userName", name);
+        localStorage.setItem("streakStart", Date.now()); // Start streak
+        window.location.href = "dailyplan.html";
+      } else {
+        alert("Please enter your name to continue.");
+      }
     }
-  }
-</script>
+  </script>
 
 </body>
 </html>
