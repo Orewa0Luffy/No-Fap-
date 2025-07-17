@@ -1,8 +1,9 @@
 body {
   margin: 0;
+  padding: 0;
   font-family: 'Poppins', sans-serif;
-  background: black;
-  color: white;
+  background: #000000;
+  color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,13 +19,25 @@ body {
 .zoro-img {
   width: 250px;
   border-radius: 20px;
-  box-shadow: 0 0 20px limegreen;
+  box-shadow: 0 0 30px limegreen;
+  transition: transform 0.3s ease-in-out;
+}
+
+.zoro-img:hover {
+  transform: scale(1.05);
 }
 
 h1 {
-  font-size: 22px;
+  font-size: 24px;
   margin-top: 15px;
   color: lime;
+}
+
+h1 span {
+  font-size: 16px;
+  display: block;
+  color: #00ffcc;
+  margin-top: 5px;
 }
 
 button {
@@ -33,7 +46,14 @@ button {
   color: black;
   padding: 12px 20px;
   font-weight: bold;
+  font-size: 16px;
   border: none;
   border-radius: 10px;
-  box-shadow: 0 0 10px limegreen;
+  box-shadow: 0 0 15px limegreen;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #00ff99;
 }
