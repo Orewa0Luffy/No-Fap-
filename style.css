@@ -57,3 +57,36 @@ button {
 button:hover {
   background: #00ff99;
 }
+
+.daily-screen {
+  text-align: center;
+  padding: 30px;
+  color: lime;
+}
+
+.daily-screen h1 {
+  font-size: 40px;
+}
+
+.daily-screen p {
+  font-size: 18px;
+  margin: 20px 0;
+  color: #00ffcc;
+}
+
+.daily-screen button {
+  margin: 10px;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  background: limegreen;
+  color: black;
+  font-weight: bold;
+  box-shadow: 0 0 15px limegreen;
+  cursor: pointer;
+}
+
+.daily-screen button:hover {
+  background: #00ff99;
+}
