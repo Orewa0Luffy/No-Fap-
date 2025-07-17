@@ -40,8 +40,8 @@
     }
     a {
       color: #ffcc00;
+      font-size: 16px;
       text-decoration: none;
-      font-weight: bold;
     }
   </style>
 </head>
@@ -88,7 +88,6 @@
       <li><input type="checkbox" class="task"> Journal at Night 📓</li>
     </ul>
 
-    <!-- 🔗 Add Custom Task Link -->
     <p><a href="addtasks.html">➕ Add Custom Task</a></p>
   </div>
 
@@ -97,9 +96,8 @@
     💥 “Discipline is choosing between what you want now and what you want most.” 💥
   </div>
 
-  <!-- Timer and Logic Script -->
   <script>
-    // Streak timer logic
+    // Timer logic
     let startTime = localStorage.getItem("streakStart");
     if (!startTime) {
       startTime = Date.now();
@@ -135,10 +133,8 @@
         }
       });
     });
-  </script>
 
-  <!-- 🔔 Custom Task Loader and Reminder Script -->
-  <script>
+    // Load custom tasks with alarm
     const customTasks = JSON.parse(localStorage.getItem("customTasks") || "[]");
     const taskList = document.querySelector(".tasks ul");
 
@@ -147,7 +143,6 @@
       li.innerHTML = `<input type="checkbox" class="task"> ${t.task} ⏰ (${t.time})`;
       taskList.appendChild(li);
 
-      // Reminder logic
       const now = new Date();
       const [h, m] = t.time.split(":");
       const alarmTime = new Date();
