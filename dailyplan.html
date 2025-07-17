@@ -38,6 +38,11 @@
       font-weight: bold;
       font-size: 18px;
     }
+    a {
+      color: #ffcc00;
+      text-decoration: none;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -82,6 +87,9 @@
       <li><input type="checkbox" class="task"> Cold Shower 🧊🚿</li>
       <li><input type="checkbox" class="task"> Journal at Night 📓</li>
     </ul>
+
+    <!-- 🔗 Add Custom Task Link -->
+    <p><a href="addtasks.html">➕ Add Custom Task</a></p>
   </div>
 
   <!-- Motivational Quote -->
@@ -89,8 +97,9 @@
     💥 “Discipline is choosing between what you want now and what you want most.” 💥
   </div>
 
+  <!-- Timer and Logic Script -->
   <script>
-    // Timer logic
+    // Streak timer logic
     let startTime = localStorage.getItem("streakStart");
     if (!startTime) {
       startTime = Date.now();
@@ -119,12 +128,40 @@
     const tasks = document.querySelectorAll(".task");
     tasks.forEach(task => {
       task.addEventListener("change", () => {
-        const allChecked = Array.from(tasks).every(t => t.checked);
+        const allChecked = Array.from(document.querySelectorAll(".task")).every(t => t.checked);
         if (allChecked) {
           document.getElementById("motivationalQuote").style.display = "block";
           new Audio("https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg").play();
         }
       });
+    });
+  </script>
+
+  <!-- 🔔 Custom Task Loader and Reminder Script -->
+  <script>
+    const customTasks = JSON.parse(localStorage.getItem("customTasks") || "[]");
+    const taskList = document.querySelector(".tasks ul");
+
+    customTasks.forEach(t => {
+      const li = document.createElement("li");
+      li.innerHTML = `<input type="checkbox" class="task"> ${t.task} ⏰ (${t.time})`;
+      taskList.appendChild(li);
+
+      // Reminder logic
+      const now = new Date();
+      const [h, m] = t.time.split(":");
+      const alarmTime = new Date();
+      alarmTime.setHours(h);
+      alarmTime.setMinutes(m);
+      alarmTime.setSeconds(0);
+
+      const diff = alarmTime.getTime() - now.getTime();
+      if (diff > 0) {
+        setTimeout(() => {
+          alert("⏰ Reminder: " + t.task);
+          new Audio("https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg").play();
+        }, diff);
+      }
     });
   </script>
 
