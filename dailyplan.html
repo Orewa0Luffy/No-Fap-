@@ -2,57 +2,135 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Daily Plan - Zoro Discipline</title>
+  <title>Zoro Daily Discipline</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: url('zoro.jpg') no-repeat center center/cover;
+      font-family: 'Segoe UI', sans-serif;
+      color: #00ffcc;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 500px;
+      margin: 40px auto;
+      text-align: center;
+      box-shadow: 0 0 15px #00ffcc;
+    }
+    h2, h3 {
+      margin-bottom: 15px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+    input[type="text"], input[type="time"] {
+      width: 70%;
+    }
+    button {
+      background-color: #00ffcc;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background-color: rgba(255, 255, 255, 0.1);
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
-  <div class="daily-screen">
-    <h1>Day <span id="dayCount">1</span></h1>
-    <p id="quote">“A man grows when he faces strong opponents.” — Zoro</p>
 
-    <button onclick="completeDay()">✅ Complete Day</button>
-    <button onclick="resetStreak()">🔁 Relapsed? Start Again</button>
-    
-    <br /><br />
-    <a href="index.html" style="color:lime;">⬅️ Back to Home</a>
+<script>
+  const name = localStorage.getItem("userName");
+  if (!name) {
+    window.location.href = "login.html";
+  }
+</script>
+
+<div class="container">
+  <h2>Welcome, <span id="user"></span> 💪</h2>
+  <h3>Discipline Challenge - Day Plan</h3>
+
+  <div>
+    <input type="text" id="taskText" placeholder="Enter your task" />
+    <input type="time" id="taskTime" />
+    <button onclick="addTask()">➕ Add Task</button>
   </div>
 
-  <script>
-    const dayCount = document.getElementById("dayCount");
-    const quote = document.getElementById("quote");
+  <ul id="taskList"></ul>
 
-    const quotes = [
-      "“A man grows when he faces strong opponents.” — Zoro",
-      "“I don't care who you are. I will surpass you.” — Zoro",
-      "“Discipline is doing it even when no one’s watching.”",
-      "“Push today. Cry later.”",
-      "“Better than yesterday. That’s the goal.”",
-      "“Fall down 7 times, stand up 8.”",
-      "“Stay strong. Stay silent. Work hard.”",
-      "“Your future self is watching.”"
-    ];
+  <audio id="alarmSound" src="https://www.soundjay.com/button/beep-07.mp3" preload="auto"></audio>
+</div>
 
-    // Load from localStorage
-    let currentDay = localStorage.getItem("zoroDay") || 1;
-    dayCount.textContent = currentDay;
-    quote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+<script>
+  document.getElementById("user").innerText = name;
 
-    function completeDay() {
-      currentDay++;
-      localStorage.setItem("zoroDay", currentDay);
-      dayCount.textContent = currentDay;
-      quote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+  let tasks = JSON.parse(localStorage.getItem("dailyTasks")) || [];
+
+  function saveTasks() {
+    localStorage.setItem("dailyTasks", JSON.stringify(tasks));
+  }
+
+  function renderTasks() {
+    const taskList = document.getElementById("taskList");
+    taskList.innerHTML = "";
+    tasks.forEach((task, index) => {
+      const li = document.createElement("li");
+      li.innerHTML = `📝 ${task.text} at ⏰ ${task.time} 
+        <button onclick="deleteTask(${index})">❌</button>`;
+      taskList.appendChild(li);
+    });
+  }
+
+  function addTask() {
+    const text = document.getElementById("taskText").value;
+    const time = document.getElementById("taskTime").value;
+    if (text && time) {
+      tasks.push({ text, time });
+      saveTasks();
+      renderTasks();
+      document.getElementById("taskText").value = "";
+      document.getElementById("taskTime").value = "";
+    } else {
+      alert("Please fill in both task and time.");
     }
+  }
 
-    function resetStreak() {
-      if (confirm("Are you sure you want to reset your streak?")) {
-        currentDay = 1;
-        localStorage.setItem("zoroDay", currentDay);
-        dayCount.textContent = currentDay;
-        quote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+  function deleteTask(index) {
+    tasks.splice(index, 1);
+    saveTasks();
+    renderTasks();
+  }
+
+  function checkAlarm() {
+    const now = new Date();
+    const current = now.toTimeString().slice(0, 5);
+    tasks.forEach((task) => {
+      if (task.time === current) {
+        alert("🚨 Reminder: " + task.text);
+        document.getElementById("alarmSound").play();
       }
-    }
-  </script>
+    });
+  }
+
+  setInterval(checkAlarm, 60000); // every 1 minute
+  renderTasks();
+</script>
+
 </body>
 </html>
