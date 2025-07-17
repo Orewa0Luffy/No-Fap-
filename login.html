@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Zoro Discipline</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: black;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    h1 {
+      color: #00ffcc;
+    }
+    input {
+      padding: 10px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 10px;
+      width: 80%;
+      max-width: 300px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 20px;
+      font-size: 18px;
+      background: #00ffcc;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Enter Your Name</h1>
+  <input type="text" id="username" placeholder="Your Name" />
+  <button onclick="saveName()">Start Challenge</button>
+
+  <script>
+    function saveName() {
+      const name = document.getElementById("username").value.trim();
+      if (name) {
+        localStorage.setItem("userName", name);
+        window.location.href = "dailyplan.html";
+      } else {
+        alert("Please enter your name.");
+      }
+    }
+
+    // If already logged in, redirect to dailyplan
+    if (localStorage.getItem("userName")) {
+      window.location.href = "dailyplan.html";
+    }
+  </script>
+</body>
+</html>
