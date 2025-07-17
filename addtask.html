@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Task</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: #000;
+      color: #00ffcc;
+      font-family: Arial;
+      padding: 30px;
+      text-align: center;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+    button {
+      background: #00ffcc;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .task-list {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Add Your Custom Daily Task</h2>
+  <input type="text" id="taskInput" placeholder="Enter task" />
+  <input type="time" id="taskTime" />
+  <button onclick="addTask()">Save Task</button>
+
+  <div class="task-list" id="taskList"></div>
+
+  <script>
+    function addTask() {
+      const task = document.getElementById("taskInput").value;
+      const time = document.getElementById("taskTime").value;
+
+      if (task && time) {
+        let tasks = JSON.parse(localStorage.getItem("customTasks") || "[]");
+        tasks.push({ task, time });
+        localStorage.setItem("customTasks", JSON.stringify(tasks));
+        alert("Task saved!");
+        displayTasks();
+        document.getElementById("taskInput").value = "";
+        document.getElementById("taskTime").value = "";
+      }
+    }
+
+    function displayTasks() {
+      const tasks = JSON.parse(localStorage.getItem("customTasks") || "[]");
+      const listDiv = document.getElementById("taskList");
+      listDiv.innerHTML = "<h3>Saved Tasks</h3>";
+      tasks.forEach((t, i) => {
+        listDiv.innerHTML += `<p>🔔 ${t.task} at ${t.time}</p>`;
+      });
+    }
+
+    displayTasks();
+  </script>
+</body>
+</html>
